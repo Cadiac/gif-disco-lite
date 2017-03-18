@@ -9,6 +9,13 @@ export const hasGetUserMedia = !!(navigator.getUserMedia ||
 export function captureUserMedia(callback) {
   const params = { audio: false, video: true };
 
+  navigator.getUserMedia = (
+    navigator.getUserMedia ||
+    navigator.webkitGetUserMedia ||
+    navigator.mozGetUserMedia ||
+    navigator.msGetUserMedia
+  );
+
   navigator.getUserMedia(params, callback, (error) => {
     // eslint-disable-next-line no-alert
     alert(`getUserMedia ${JSON.stringify(error)}`);

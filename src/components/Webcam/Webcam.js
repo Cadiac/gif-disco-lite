@@ -26,8 +26,9 @@ class Webcam extends Component {
     captureUserMedia((stream) => {
       /* eslint-disable no-undef */
       this.setState({
-        src: vendorURL ?
-          vendorURL.createObjectURL(stream) : stream,
+        src: (window.URL || window.webkitURL) ?
+          (window.URL || window.webkitURL).createObjectURL(stream) :
+          stream,
       }, this.props.onReady);
       /* eslint-enable no-undef */
     });

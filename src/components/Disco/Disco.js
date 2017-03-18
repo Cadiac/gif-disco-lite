@@ -124,8 +124,8 @@ class Disco extends Component {
 
     this.gif.on('finished', (blob) => {
       /* eslint-disable no-undef */
-      const gifURL = URL.createObjectURL(blob);
-      console.log('Gif generation finished!', URL.createObjectURL(blob));
+      const gifURL = (window.URL || window.webkitURL).createObjectURL(blob);
+      console.log('Gif generation finished!', gifURL);
       /* eslint-enable no-undef */
       this.setState({
         gif: gifURL,
