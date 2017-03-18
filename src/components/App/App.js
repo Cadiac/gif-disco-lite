@@ -1,21 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import Disco from '../Disco/Disco';
 import logo from './logo.svg';
 import './App.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <Disco />
-      </div>
-    );
-  }
-}
+const App = () => (
+  <div className="App">
+    <div className="App-header">
+      <img src={logo} className="App-logo" alt="logo" />
+      <h2>GIF Disco Lite</h2>
+    </div>
+    <Disco />
+  </div>
+);
 
 export default App;

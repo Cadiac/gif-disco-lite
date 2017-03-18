@@ -5,5 +5,5 @@ import './index.css';
 
 ReactDOM.render(
   <App />,
-  document.getElementById('root')
-);
+  // eslint-disable-next-line no-undef
+  document.getElementById('root'));
