@@ -4,7 +4,6 @@ const Hapi = require('hapi');
 const server = new Hapi.Server();
 
 server.connection({
-  host: process.env.HOST || 'localhost',
   port: Number(process.env.PORT || 8080),
   routes: {
     files: {
