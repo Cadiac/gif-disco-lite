@@ -2,13 +2,14 @@
 
 import React, { Component } from 'react';
 // import RecordRTC from 'recordrtc';
+
 import Seriously from 'seriously';
 import 'seriously/effects/seriously.vignette';
 import 'seriously/effects/seriously.split';
 import 'seriously/effects/seriously.blend';
 import 'seriously/effects/seriously.chroma';
 
-import Webcam from './Webcam';
+import Webcam from '../Webcam/Webcam';
 import './Disco.css';
 
 class Disco extends Component {

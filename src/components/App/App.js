@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Disco from './Disco';
+import Disco from '../Disco/Disco';
 import logo from './logo.svg';
 import './App.css';
 
