@@ -56,7 +56,7 @@ class Disco extends Component {
     this.reformat = this.composition.transform('reformat');
     this.reformat.mode = 'cover';
     this.reformat.width = 480;
-    this.reformat.height = 640;
+    this.reformat.height = 480;
 
     // Composition target
     this.target = this.composition.target('#canvas');
@@ -144,8 +144,8 @@ class Disco extends Component {
           </div>
           <canvas
             id="canvas"
-            width="1280"
-            height="720"
+            width="480"
+            height="480"
             ref={(canvas) => { this.canvas = canvas; }}
           />
         </div>
