@@ -1,7 +1,6 @@
-/* eslint-disable no-undef */
-
 import React, { Component } from 'react';
-// import RecordRTC from 'recordrtc';
+
+import GIF from 'gif.js';
 
 import Seriously from 'seriously';
 import 'seriously/effects/seriously.vignette';
@@ -21,13 +20,16 @@ class Disco extends Component {
       vignette: 1,
       split: 0,
       chroma: '#4def29',
-      src: null,
+      gif: null,
+      recorder: null,
     };
 
     this.handleWebcamReady = this.handleWebcamReady.bind(this);
     this.handleVignetteChange = this.handleVignetteChange.bind(this);
     this.handleSplitChange = this.handleSplitChange.bind(this);
     this.handleChromaChange = this.handleChromaChange.bind(this);
+    this.handleRecordingStart = this.handleRecordingStart.bind(this);
+    this.handleRecordingStop = this.handleRecordingStop.bind(this);
   }
 
   componentDidMount() {
@@ -102,6 +104,37 @@ class Disco extends Component {
     this.setState({ chroma: color.hex });
   }
 
+  handleRecordingStart() {
+    this.gif = new GIF({
+      workers: 2,
+      quality: 10,
+      transparent: 'rgba(0,0,0,0)',
+    });
+    const interval = setInterval(() => {
+      this.gif.addFrame(this.canvas, { delay: 100, copy: true });
+    }, 100);
+
+
+    console.log('Started gif generation.');
+    this.setState({ recorder: interval });
+  }
+
+  handleRecordingStop() {
+    clearInterval(this.state.recorder);
+
+    this.gif.on('finished', (blob) => {
+      /* eslint-disable no-undef */
+      const gifURL = URL.createObjectURL(blob);
+      console.log('Gif generation finished!', URL.createObjectURL(blob));
+      /* eslint-enable no-undef */
+      this.setState({
+        gif: gifURL,
+      });
+    });
+
+    this.gif.render();
+  }
+
   render() {
     return (
       <div className="Disco">
@@ -109,7 +142,12 @@ class Disco extends Component {
           <div className="Disco-hidden">
             <Webcam onReady={this.handleWebcamReady} />
           </div>
-          <canvas id="canvas" width="1280" height="720" />
+          <canvas
+            id="canvas"
+            width="1280"
+            height="720"
+            ref={(canvas) => { this.canvas = canvas; }}
+          />
         </div>
         <Settings
           onVignetteChange={this.handleVignetteChange}
@@ -119,6 +157,13 @@ class Disco extends Component {
           split={this.state.split}
           chroma={this.state.chroma}
         />
+        <button onClick={this.handleRecordingStart}>
+          Start recording
+        </button>
+        <button onClick={this.handleRecordingStop}>
+          Stop recording
+        </button>
+        <img src={this.state.gif} alt="Dance!" />
       </div>
     );
   }
