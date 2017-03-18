@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Seriously from 'seriously';
 import 'seriously/effects/seriously.vignette';
 import 'seriously/effects/seriously.split';
+import 'seriously/effects/seriously.blend';
 import 'seriously/effects/seriously.chroma';
 
 import logo from './logo.svg';
@@ -30,13 +31,32 @@ class App extends Component {
     this.split = this.composition.effect('split');
     this.split.split = this.state.split;
 
+    this.blend = this.composition.effect('blend');
+
+    this.chroma = this.composition.effect('chroma');
+    this.chroma.weight = 1.32;
+    this.chroma.balance = 0;
+    this.chroma.screen = 'rgb(77, 239, 41)';
+    this.chroma.clipWhite = 0.85;
+    this.chroma.clipBlack = 0.5125;
+
     // Composition target
     this.target = this.composition.target('#canvas');
 
     // Connect composition sources
-    this.vignette.source = '#colorbars';
-    this.split.sourceA = '#colorbars';
+    this.background = this.composition.source('#background');
+    this.video = this.composition.source('#video');
+
+    this.chroma.source = this.video;
+
+    this.blend.top = this.chroma;
+    this.blend.bottom = this.background;
+
+    this.vignette.source = this.blend;
+
+    this.split.sourceA = this.background;
     this.split.sourceB = this.vignette;
+
     this.target.source = this.split;
 
     // Start composition
@@ -91,8 +111,9 @@ class App extends Component {
             />
           </div>
         </div>
-        <img src="images/colorbars.png" id="colorbars" alt="colorbars" />
-        <canvas id="canvas" width="220" height="165" />
+        <img src="images/disco.jpg" id="background" alt="background" />
+        <video src="videos/timetostop.mp4" id="video" autoPlay />
+        <canvas id="canvas" width="1280" height="720" />
       </div>
     );
   }
