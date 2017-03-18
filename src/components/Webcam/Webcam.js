@@ -37,7 +37,7 @@ class Webcam extends Component {
   render() {
     const { src } = this.state;
     return (
-      <video id="webcam" autoPlay muted src={src} width="1280" height="720" />
+      <video id="webcam" autoPlay muted src={src} width="480" height="640" />
     );
   }
 }

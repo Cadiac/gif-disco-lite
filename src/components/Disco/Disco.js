@@ -55,8 +55,8 @@ class Disco extends Component {
     // Resize video
     this.reformat = this.composition.transform('reformat');
     this.reformat.mode = 'cover';
-    this.reformat.width = 1280;
-    this.reformat.height = 720;
+    this.reformat.width = 480;
+    this.reformat.height = 640;
 
     // Composition target
     this.target = this.composition.target('#canvas');
@@ -108,7 +108,7 @@ class Disco extends Component {
     this.gif = new GIF({
       workers: 2,
       quality: 10,
-      transparent: 'rgba(0,0,0,0)',
+      transparent: 'rgba(0,255,0,0)',
     });
     const interval = setInterval(() => {
       this.gif.addFrame(this.canvas, { delay: 100, copy: true });
