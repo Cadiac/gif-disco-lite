@@ -11,7 +11,7 @@ export function captureUserMedia(callback) {
 
   navigator.getUserMedia(params, callback, (error) => {
     // eslint-disable-next-line no-alert
-    alert(JSON.stringify(error));
+    alert(`getUserMedia ${JSON.stringify(error)}`);
   });
 }
 
