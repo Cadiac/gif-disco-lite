@@ -1,3 +1,18 @@
-#background {
-  display: none;
+#canvas {
+  width: 100%;
+}
+
+.Disco {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Disco-canvas {
+  z-index: -1;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%);
 }
