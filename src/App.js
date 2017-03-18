@@ -8,6 +8,8 @@ import 'seriously/effects/seriously.chroma';
 import logo from './logo.svg';
 import './App.css';
 
+import { initCamera } from './utils';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -46,6 +48,7 @@ class App extends Component {
     // Connect composition sources
     this.background = this.composition.source('#background');
     this.video = this.composition.source('#video');
+    initCamera('#video');
 
     this.chroma.source = this.video;
 
@@ -112,7 +115,7 @@ class App extends Component {
           </div>
         </div>
         <img src="images/disco.jpg" id="background" alt="background" />
-        <video src="videos/timetostop.mp4" id="video" autoPlay />
+        <video id="video" />
         <canvas id="canvas" width="1280" height="720" />
       </div>
     );
