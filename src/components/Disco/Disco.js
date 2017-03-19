@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import GIF from 'gif.js';
 
+import BPromise from 'bluebird';
 import Seriously from 'seriously';
 import 'seriously/effects/seriously.vignette';
 import 'seriously/effects/seriously.split';
@@ -123,22 +124,13 @@ class Disco extends Component {
 
       fetch('/api/v1/gifs', { method: 'POST' })
         .then(response => response.json())
-        .then((response) => {
-          const xhr = new XMLHttpRequest();
-          xhr.open('PUT', response.signedUrl);
-          xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4) {
-              if (xhr.status === 200) {
-                this.setState({
-                  gif: response.publicUrl,
-                });
-              } else {
-                console.log('Could not upload file.');
-              }
-            }
-          };
-          return xhr.send(blob);
-        })
+        .then(response => BPromise.props({
+          publicUrl: response.publicUrl,
+          aws: fetch(response.signedUrl, { method: 'PUT', body: blob }),
+        }))
+        .then(data => this.setState({
+          gif: data.publicUrl,
+        }))
         .catch((err) => {
           console.log('Something went wrong', err);
         });
