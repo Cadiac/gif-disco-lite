@@ -5,7 +5,6 @@ import GIF from 'gif.js';
 import Seriously from 'seriously';
 import 'seriously/effects/seriously.vignette';
 import 'seriously/effects/seriously.split';
-import 'seriously/effects/seriously.blend';
 import 'seriously/effects/seriously.chroma';
 
 import Webcam from '../Webcam/Webcam';
@@ -42,8 +41,6 @@ class Disco extends Component {
 
     this.split = this.composition.effect('split');
     this.split.split = this.state.split;
-
-    this.blend = this.composition.effect('blend');
 
     this.chroma = this.composition.effect('chroma');
     this.chroma.weight = 1.32;
@@ -108,7 +105,7 @@ class Disco extends Component {
     this.gif = new GIF({
       workers: 2,
       quality: 10,
-      transparent: 'rgba(0,255,0,0)',
+      transparent: 'rgba(0, 0, 0, 0)',
     });
     const interval = setInterval(() => {
       this.gif.addFrame(this.canvas, { delay: 100 });
@@ -164,7 +161,6 @@ class Disco extends Component {
           Stop recording
         </button>
         <img src={this.state.gif} alt="Dance!" />
-        <video src={'/videos/test.webm'} autoPlay />
       </div>
     );
   }
