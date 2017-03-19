@@ -3,6 +3,10 @@
   background-color: rgba(0, 0, 0, 0);
 }
 
+.Disco-hidden {
+  display: none;
+}
+
 .Disco {
   display: flex;
   align-items: center;

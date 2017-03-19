@@ -139,15 +139,15 @@ class Disco extends Component {
     return (
       <div className="Disco">
         <div className="Disco-canvas">
-          <div className="Disco-hidden">
-            <Webcam onReady={this.handleWebcamReady} />
-          </div>
           <canvas
             id="canvas"
             width="480"
             height="480"
             ref={(canvas) => { this.canvas = canvas; }}
           />
+        </div>
+        <div className="Disco-hidden">
+          <Webcam onReady={this.handleWebcamReady} />
         </div>
         <Settings
           onVignetteChange={this.handleVignetteChange}
