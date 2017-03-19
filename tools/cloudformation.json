@@ -1,0 +1,122 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Resources": {
+    "GifBucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketName": {
+          "Ref": "GifBucketName"
+        },
+        "AccessControl": "Private"
+      },
+      "DeletionPolicy": "Retain"
+    },
+    "GifBucketUserPolicy": {
+      "Type": "AWS::S3::BucketPolicy",
+      "Properties": {
+        "PolicyDocument": {
+          "Id": "Give limited S3 access to user",
+          "Statement": [
+            {
+              "Sid": "AllowPublicRead",
+              "Effect": "Allow",
+              "Action": [
+                "s3:GetObject"
+              ],
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:aws:s3:::",
+                    {
+                      "Ref": "GifBucket"
+                    },
+                    "/*"
+                  ]
+                ]
+              },
+              "Principal": {
+                "AWS": {
+                  "Ref": "UserArn"
+                }
+              }
+            },
+            {
+              "Sid": "S3 list access",
+              "Action": [
+                "s3:ListBucket"
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:aws:s3:::",
+                    {
+                      "Ref": "GifBucket"
+                    }
+                  ]
+                ]
+              },
+              "Principal": {
+                "AWS": {
+                  "Ref": "UserArn"
+                }
+              }
+            },
+            {
+              "Sid": "S3 object access",
+              "Action": [
+                "s3:DeleteObject",
+                "s3:GetObject",
+                "s3:PutObject"
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:aws:s3:::",
+                    {
+                      "Ref": "GifBucket"
+                    },
+                    "/*"
+                  ]
+                ]
+              },
+              "Principal": {
+                "AWS": {
+                  "Ref": "UserArn"
+                }
+              }
+            }
+          ]
+        },
+        "Bucket": {
+          "Ref": "GifBucket"
+        }
+      },
+      "DependsOn": [
+        "GifBucket"
+      ]
+    },
+  },
+  "Parameters": {
+    "GifBucketName": {
+      "Description": "Gif bucket name",
+      "Type": "String",
+    },
+    "UserArn": {
+      "Description": "ARN of the gif disco service user. Create it manually and copy the ARN from it.",
+      "Type": "String"
+    }
+  },
+  "Outputs": {
+    "GifBucketNameOutput": {
+      "Description": "Name of the created gif bucket",
+      "Value": {
+        "Ref": "GifBucket"
+      }
+    }
+  }
+}
