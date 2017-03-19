@@ -7,7 +7,14 @@
         "BucketName": {
           "Ref": "GifBucketName"
         },
-        "AccessControl": "Private"
+        "AccessControl": "PublicRead",
+        "CorsConfiguration" : {
+          "CorsRules" : [{
+            "AllowedHeaders" : [ "*" ],
+            "AllowedMethods" : [ "PUT" ],
+            "AllowedOrigins" : [ "*" ]
+          }]
+        }
       },
       "DeletionPolicy": "Retain"
     },
@@ -15,7 +22,7 @@
       "Type": "AWS::S3::BucketPolicy",
       "Properties": {
         "PolicyDocument": {
-          "Id": "Give limited S3 access to user",
+          "Id": "Give limited S3 update access to user",
           "Statement": [
             {
               "Sid": "AllowPublicRead",
@@ -35,11 +42,7 @@
                   ]
                 ]
               },
-              "Principal": {
-                "AWS": {
-                  "Ref": "UserArn"
-                }
-              }
+              "Principal": "*",
             },
             {
               "Sid": "S3 list access",

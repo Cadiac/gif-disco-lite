@@ -111,7 +111,6 @@ class Disco extends Component {
       this.gif.addFrame(this.canvas, { delay: 100 });
     }, 100);
 
-
     console.log('Started gif generation.');
     this.setState({ recorder: interval });
   }
@@ -120,13 +119,29 @@ class Disco extends Component {
     clearInterval(this.state.recorder);
 
     this.gif.on('finished', (blob) => {
-      /* eslint-disable no-undef */
-      const gifURL = (window.URL || window.webkitURL).createObjectURL(blob);
-      console.log('Gif generation finished!', gifURL);
-      /* eslint-enable no-undef */
-      this.setState({
-        gif: gifURL,
-      });
+      console.log('Gif generation finished!');
+
+      fetch('/api/v1/gifs', { method: 'POST' })
+        .then(response => response.json())
+        .then((response) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open('PUT', response.signedUrl);
+          xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4) {
+              if (xhr.status === 200) {
+                this.setState({
+                  gif: response.publicUrl,
+                });
+              } else {
+                console.log('Could not upload file.');
+              }
+            }
+          };
+          return xhr.send(blob);
+        })
+        .catch((err) => {
+          console.log('Something went wrong', err);
+        });
     });
 
     this.gif.render();

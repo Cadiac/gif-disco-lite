@@ -1,5 +1,6 @@
 const Path = require('path');
 const Hapi = require('hapi');
+const gifs = require('./api/gifs');
 
 const server = new Hapi.Server();
 
@@ -48,6 +49,12 @@ server.route({
       index: true,
     },
   },
+});
+
+server.route({
+  method: 'POST',
+  path: '/api/v1/gifs',
+  handler: gifs.createGifSignedUrl,
 });
 
 server.start(() => {
