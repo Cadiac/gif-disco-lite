@@ -111,7 +111,7 @@ class Disco extends Component {
       transparent: 'rgba(0,255,0,0)',
     });
     const interval = setInterval(() => {
-      this.gif.addFrame(this.canvas, { delay: 100, copy: true });
+      this.gif.addFrame(this.canvas, { delay: 100 });
     }, 100);
 
 
@@ -164,6 +164,7 @@ class Disco extends Component {
           Stop recording
         </button>
         <img src={this.state.gif} alt="Dance!" />
+        <video src={'/videos/test.webm'} autoPlay />
       </div>
     );
   }
