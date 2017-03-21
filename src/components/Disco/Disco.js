@@ -1,15 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 import GIF from 'gif.js';
 
-import BPromise from 'bluebird';
 import Seriously from 'seriously';
 import 'seriously/effects/seriously.vignette';
 import 'seriously/effects/seriously.split';
 import 'seriously/effects/seriously.chroma';
 
 import Webcam from '../Webcam/Webcam';
-import Settings from '../Settings/Settings';
 
 import './Disco.css';
 
@@ -17,36 +15,31 @@ class Disco extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      vignette: 1,
-      split: 0,
-      chroma: '#4def29',
-      gif: null,
       recorder: null,
     };
 
     this.handleWebcamReady = this.handleWebcamReady.bind(this);
-    this.handleVignetteChange = this.handleVignetteChange.bind(this);
-    this.handleSplitChange = this.handleSplitChange.bind(this);
-    this.handleChromaChange = this.handleChromaChange.bind(this);
     this.handleRecordingStart = this.handleRecordingStart.bind(this);
     this.handleRecordingStop = this.handleRecordingStop.bind(this);
   }
 
   componentDidMount() {
+    const { settings } = this.props;
+
     // Setup Seriously
     this.composition = new Seriously();
 
     // Effects
     this.vignette = this.composition.effect('vignette');
-    this.vignette.amount = this.state.vignette;
+    this.vignette.amount = settings.vignette;
 
     this.split = this.composition.effect('split');
-    this.split.split = this.state.split;
+    this.split.split = settings.split;
 
     this.chroma = this.composition.effect('chroma');
     this.chroma.weight = 1.32;
     this.chroma.balance = 0;
-    this.chroma.screen = this.state.chroma;
+    this.chroma.screen = settings.chroma;
     this.chroma.clipWhite = 0.85;
     this.chroma.clipBlack = 0.5125;
 
@@ -74,11 +67,11 @@ class Disco extends Component {
     this.target.source = this.split;
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    // Connect Seriously effect settings to state
-    this.vignette.amount = nextState.vignette;
-    this.split.split = nextState.split;
-    this.chroma.screen = nextState.chroma;
+  componentWillUpdate(nextProps) {
+    // Connect Seriously effect settings to props
+    this.vignette.amount = nextProps.settings.vignette;
+    this.split.split = nextProps.settings.split;
+    this.chroma.screen = nextProps.settings.chroma;
   }
 
   componentWillUnmount() {
@@ -88,18 +81,6 @@ class Disco extends Component {
 
   handleWebcamReady() {
     this.composition.go();
-  }
-
-  handleVignetteChange(event) {
-    this.setState({ vignette: Number(event.target.value) });
-  }
-
-  handleSplitChange(event) {
-    this.setState({ split: Number(event.target.value) });
-  }
-
-  handleChromaChange(color) {
-    this.setState({ chroma: color.hex });
   }
 
   handleRecordingStart() {
@@ -121,25 +102,14 @@ class Disco extends Component {
 
     this.gif.on('finished', (blob) => {
       console.log('Gif generation finished!');
-
-      fetch('/api/v1/gifs', { method: 'POST' })
-        .then(response => response.json())
-        .then(response => BPromise.props({
-          publicUrl: response.publicUrl,
-          aws: fetch(response.signedUrl, { method: 'PUT', body: blob }),
-        }))
-        .then(data => this.setState({
-          gif: data.publicUrl,
-        }))
-        .catch((err) => {
-          console.log('Something went wrong', err);
-        });
+      this.props.onGifCreate(blob);
     });
 
     this.gif.render();
   }
 
   render() {
+    const { disco } = this.props;
     return (
       <div className="Disco">
         <div className="Disco-canvas">
@@ -153,24 +123,31 @@ class Disco extends Component {
         <div className="Disco-hidden">
           <Webcam onReady={this.handleWebcamReady} />
         </div>
-        <Settings
-          onVignetteChange={this.handleVignetteChange}
-          onSplitChange={this.handleSplitChange}
-          onChromaChange={this.handleChromaChange}
-          vignette={this.state.vignette}
-          split={this.state.split}
-          chroma={this.state.chroma}
-        />
         <button onClick={this.handleRecordingStart}>
           Start recording
         </button>
         <button onClick={this.handleRecordingStop}>
           Stop recording
         </button>
-        <img src={this.state.gif} alt="Dance!" />
+        <img src={disco.gifUrl} alt="Dance!" />
       </div>
     );
   }
 }
+
+Disco.propTypes = {
+  disco: PropTypes.shape({
+    loading: PropTypes.bool.isRequired,
+    gifUrl: PropTypes.string.isRequired,
+  }).isRequired,
+
+  settings: PropTypes.shape({
+    vignette: PropTypes.number.isRequired,
+    split: PropTypes.number.isRequired,
+    chroma: PropTypes.string.isRequired,
+  }).isRequired,
+
+  onGifCreate: PropTypes.func.isRequired,
+};
 
 export default Disco;
