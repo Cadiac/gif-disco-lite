@@ -1,8 +1,11 @@
 export const discoTypes = {
   GIF_CREATE_REQUEST: 'GIF_CREATE_REQUEST',
   GIF_CREATE_SUCCESS: 'GIF_CREATE_SUCCESS',
-  API_ERROR: 'API_ERROR',
+
   SET_GIF_URL: 'SET_GIF_URL',
+
+  API_ERROR: 'API_ERROR',
+  DISMISS_ERROR: 'DISMISS_ERROR',
 };
 
 export const settingTypes = {

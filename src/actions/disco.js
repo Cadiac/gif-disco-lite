@@ -4,13 +4,17 @@ import * as api from '../api/api';
 
 // eslint-disable-next-line import/prefer-default-export
 export function createGif(blob) {
-  return dispatch => api.createGif(blob)
-    .then(response => BPromise.all([
-      dispatch({ type: discoTypes.GIF_CREATE_SUCCESS }),
-      dispatch({
-        type: discoTypes.SET_GIF_URL,
-        payload: { gifUrl: response.data.gifUrl },
-      }),
-    ]))
-    .catch(error => dispatch({ type: discoTypes.API_ERROR, payload: { error } }));
+  return (dispatch) => {
+    dispatch({ type: discoTypes.GIF_CREATE_REQUEST });
+
+    return api.createGif(blob)
+      .then(data => BPromise.all([
+        dispatch({ type: discoTypes.GIF_CREATE_SUCCESS }),
+        dispatch({
+          type: discoTypes.SET_GIF_URL,
+          payload: { gifUrl: data.publicUrl },
+        }),
+      ]))
+      .catch(error => dispatch({ type: discoTypes.API_ERROR, error }));
+  };
 }
