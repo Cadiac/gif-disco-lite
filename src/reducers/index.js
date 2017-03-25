@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import disco from './disco';
+import creator from './creator';
 import settings from './settings';
 
 const rootReducer = combineReducers({
-  disco,
+  creator,
   settings,
 });
 
