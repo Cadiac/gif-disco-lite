@@ -1,12 +1,11 @@
 import React from 'react';
 
-import DiscoContainer from '../../containers/DiscoContainer';
-// import logo from './logo.svg';
+import CreatorContainer from '../../containers/CreatorContainer';
 import './App.css';
 
 const App = () => (
   <div className="App">
-    <DiscoContainer />
+    <CreatorContainer />
   </div>
 );
 

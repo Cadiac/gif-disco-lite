@@ -1,15 +1,9 @@
 import { creatorTypes } from '../constants/actionTypes';
 
-const creatorSteps = {
-  START: 'START',
-  COUNTDOWN: 'COUNTDOWN',
-  RECORDING: 'RECORDING',
-  ACCEPT_OR_REJECT: 'ACCEPT_OR_REJECT',
-  COMPLETE: 'COMPLETE',
-};
+import creatorSteps from '../constants/creatorSteps';
 
 const initialState = {
-  step: creatorSteps.IDLE,
+  step: creatorSteps.START,
   countdown: 3,
   recording: false,
   gifUrl: null,
