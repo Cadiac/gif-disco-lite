@@ -2,13 +2,14 @@ import React, { PropTypes } from 'react';
 
 import { creatorSteps } from './CreatorConstants';
 import CountdownContainer from './Countdown/CountdownContainer';
+import StartContainer from './Start/StartContainer';
 
 const CreatorRouter = (props) => {
   const { step } = props;
   switch (step) {
     case creatorSteps.START:
       return (
-        <button className="button is-primary">Start</button>
+        <StartContainer />
       );
     case creatorSteps.COUNTDOWN:
       return (

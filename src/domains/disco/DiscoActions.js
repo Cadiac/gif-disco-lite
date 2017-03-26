@@ -1,7 +1,7 @@
 /* TODO move this to creator, role of disco should be the display thing
 import BPromise from 'bluebird';
 import { creatorTypes } from '../constants/actionTypes';
-import * as api from '../api/api';
+import * as api from '../utils/api';
 
 // eslint-disable-next-line import/prefer-default-export
 export function createGif(blob) {

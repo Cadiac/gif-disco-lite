@@ -7,8 +7,6 @@ import './sass/theme.scss';
 import App from './domains/app/App';
 import configureStore from './store/create';
 
-import './index.css';
-
 const store = configureStore();
 
 ReactDOM.render(

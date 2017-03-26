@@ -6,9 +6,13 @@ import CreatorRouter from './CreatorRouter';
 const CreatorContainer = (props) => {
   const { step } = props;
   return (
-    <div>
-      <CreatorRouter step={step} />
-    </div>
+    <section className="hero is-info is-fullheight">
+      <div className="hero-body">
+        <div className="container has-text-centered">
+          <CreatorRouter step={step} />
+        </div>
+      </div>
+    </section>
   );
 };
 

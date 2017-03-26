@@ -164,7 +164,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loaders: ['style', 'css', 'sass']
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
       }
       // ** STOP ** Are you adding a new loader?
       // Remember to add the new extension(s) to the "url" loader exclusion list.
