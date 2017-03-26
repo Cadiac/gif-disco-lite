@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import creator from './creator';
-import settings from './settings';
+import creator from '../domains/creator/CreatorReducer';
+import settings from '../domains/settings/SettingsReducer';
 
 const rootReducer = combineReducers({
   creator,

@@ -1,6 +1,4 @@
-import { creatorTypes } from '../constants/actionTypes';
-
-import creatorSteps from '../constants/creatorSteps';
+import { creatorTypes, creatorSteps } from './CreatorConstants';
 
 const initialState = {
   step: creatorSteps.START,

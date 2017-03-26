@@ -1,4 +1,4 @@
-import { settingTypes } from '../constants/actionTypes';
+import { settingTypes } from './SettingsConstants';
 
 export const setVignette = vignette => ({
   payload: { vignette },

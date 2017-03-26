@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CreatorContainer from '../../containers/CreatorContainer';
+import CreatorContainer from '../creator/CreatorContainer';
 import './App.css';
 
 const App = () => (

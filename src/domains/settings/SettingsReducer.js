@@ -1,4 +1,4 @@
-import { settingTypes } from '../constants/actionTypes';
+import { settingTypes } from './SettingsConstants';
 
 const initialState = {
   vignette: 1,

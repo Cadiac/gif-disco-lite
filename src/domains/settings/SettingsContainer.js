@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as SettingActions from '../actions/settings';
+import * as SettingsActions from './SettingsActions';
 
-import Settings from '../components/Settings/Settings';
+import Settings from './Settings';
 
 const SettingsContainer = (props) => {
   const { settings, actions } = props;
@@ -39,7 +39,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(SettingActions, dispatch),
+    actions: bindActionCreators(SettingsActions, dispatch),
   };
 }
 

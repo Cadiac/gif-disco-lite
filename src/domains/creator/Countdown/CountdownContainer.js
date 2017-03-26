@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import Countdown from '../components/Countdown/Countdown';
+import Countdown from './Countdown';
 
 const CountdownContainer = (props) => {
   const { countdown } = props;

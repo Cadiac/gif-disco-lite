@@ -1,3 +1,11 @@
+export const creatorSteps = {
+  START: 'START',
+  COUNTDOWN: 'COUNTDOWN',
+  RECORDING: 'RECORDING',
+  ACCEPT_OR_REJECT: 'ACCEPT_OR_REJECT',
+  COMPLETE: 'COMPLETE',
+};
+
 export const creatorTypes = {
   GIF_CREATE_REQUEST: 'GIF_CREATE_REQUEST',
   GIF_CREATE_SUCCESS: 'GIF_CREATE_SUCCESS',
@@ -15,10 +23,4 @@ export const creatorTypes = {
   ACCEPT_GIF: 'ACCEPT_GIF',
   REJECT_GIF: 'REJECT_GIF',
   RESET_CREATOR: 'RESET_CREATOR',
-};
-
-export const settingTypes = {
-  SET_VIGNETTE: 'SET_VIGNETTE',
-  SET_SPLIT: 'SET_SPLIT',
-  SET_CHROMA_COLOR: 'SET_CHROMA_COLOR',
 };

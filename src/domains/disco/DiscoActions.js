@@ -1,3 +1,4 @@
+/* TODO move this to creator, role of disco should be the display thing
 import BPromise from 'bluebird';
 import { creatorTypes } from '../constants/actionTypes';
 import * as api from '../api/api';
@@ -18,3 +19,4 @@ export function createGif(blob) {
       .catch(error => dispatch({ type: creatorTypes.API_ERROR, error }));
   };
 }
+*/
