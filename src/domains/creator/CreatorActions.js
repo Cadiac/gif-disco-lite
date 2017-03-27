@@ -1,6 +1,11 @@
 import BPromise from 'bluebird';
 import { creatorTypes } from './CreatorConstants';
 
+export const initializeCreator = (canvas, webcam) => ({
+  type: creatorTypes.INITIALIZE_CREATOR,
+  payload: { canvas, webcam },
+});
+
 export const startCreator = () => (
   (dispatch) => {
     dispatch({ type: creatorTypes.START_GIF_CREATION });
@@ -26,6 +31,7 @@ export const decrementCountdown = () => ({
 });
 
 export default {
+  initializeCreator,
   startCreator,
   abortCreator,
   decrementCountdown,

@@ -3,6 +3,7 @@ import { creatorTypes, creatorSteps } from './CreatorConstants';
 const initialState = {
   step: creatorSteps.START,
   countdown: 3,
+  webcam: false,
   recording: false,
   gifUrl: null,
   error: null,
@@ -11,6 +12,11 @@ const initialState = {
 
 export default function creator(state = initialState, action) {
   switch (action.type) {
+    case creatorTypes.START_WEBCAM:
+      return {
+        ...state,
+        webcam: true,
+      };
     case creatorTypes.START_GIF_CREATION:
       return {
         ...state,
@@ -35,14 +41,12 @@ export default function creator(state = initialState, action) {
         recording: true,
         step: creatorSteps.RECORDING,
       };
-
     case creatorTypes.END_GIF_RECORDING:
       return {
         ...state,
         recording: false,
         step: creatorSteps.ACCEPT_OR_REJECT,
       };
-
     case creatorTypes.SET_GIF_URL:
       return {
         ...state,

@@ -15,6 +15,7 @@ class Webcam extends Component {
 
   componentDidMount() {
     if (!hasGetUserMedia) {
+      // TODO...
       // eslint-disable-next-line no-undef, no-alert
       alert('Incompatible browser');
       return;
@@ -24,20 +25,18 @@ class Webcam extends Component {
 
   requestUserMedia() {
     captureUserMedia((stream) => {
-      /* eslint-disable no-undef */
       this.setState({
         src: (window.URL || window.webkitURL) ?
           (window.URL || window.webkitURL).createObjectURL(stream) :
           stream,
       }, this.props.onReady);
-      /* eslint-enable no-undef */
     });
   }
 
   render() {
-    // const { src } = this.state;
+    const { src } = this.state;
     return (
-      <video id="webcam" autoPlay muted src={'/videos/timetostop.mp4'} width="480" height="480" />
+      <video id="webcam" autoPlay muted src={src} width="480" height="480" />
     );
   }
 }
