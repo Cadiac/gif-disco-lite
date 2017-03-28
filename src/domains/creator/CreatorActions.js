@@ -1,4 +1,5 @@
 import BPromise from 'bluebird';
+import * as api from '../../utils/api';
 import { creatorTypes } from './CreatorConstants';
 
 export const initializeCreator = (canvas, webcam) => ({
@@ -16,23 +17,35 @@ export const startCreator = () => (
       .delay(1000) // 2...
       .then(() => dispatch({ type: creatorTypes.DECREMENT_COUNTDOWN }))
       .delay(1000) // 1...
-      .then(() => dispatch({ type: creatorTypes.DECREMENT_COUNTDOWN }))
-      .delay(1000) // Dance!
-      .then(() => dispatch({ type: creatorTypes.START_GIF_RECORDING }));
+      .then(() => BPromise.all([
+        dispatch({ type: creatorTypes.DECREMENT_COUNTDOWN }),
+        dispatch({ type: creatorTypes.START_GIF_RECORDING }),
+      ]));
   }
 );
 
-export const abortCreator = () => ({
-  type: creatorTypes.ABORT_GIF_CREATION,
-});
+export const resetCreator = () => ({ type: creatorTypes.RESET_CREATOR });
 
 export const decrementCountdown = () => ({
   type: creatorTypes.DECREMENT_COUNTDOWN,
 });
 
+export const uploadGif = () => (
+  (dispatch, getState) => {
+    dispatch({ type: creatorTypes.GIF_CREATE_REQUEST });
+
+    const blob = getState().creator.blob;
+
+    return api.createGif(blob)
+      .then(() => dispatch({ type: creatorTypes.GIF_CREATE_SUCCESS }))
+      .catch(error => dispatch({ type: creatorTypes.API_ERROR, error }));
+  }
+);
+
 export default {
   initializeCreator,
   startCreator,
-  abortCreator,
+  resetCreator,
   decrementCountdown,
+  uploadGif,
 };

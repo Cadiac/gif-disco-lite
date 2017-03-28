@@ -5,7 +5,9 @@ const initialState = {
   countdown: 3,
   webcam: false,
   recording: false,
+  preview: true,
   gifUrl: null,
+  blob: null,
   error: null,
   loading: false,
 };
@@ -16,25 +18,22 @@ export default function creator(state = initialState, action) {
       return {
         ...state,
         webcam: true,
+        preview: true,
       };
     case creatorTypes.START_GIF_CREATION:
       return {
         ...state,
+        countdown: 3,
+        gifUrl: null,
+        blob: null,
+        preview: true,
         step: creatorSteps.COUNTDOWN,
       };
-
-    case creatorTypes.ABORT_GIF_CREATION:
-      return {
-        ...state,
-        step: creatorSteps.START,
-      };
-
     case creatorTypes.DECREMENT_COUNTDOWN:
       return {
         ...state,
         countdown: state.countdown - 1,
       };
-
     case creatorTypes.START_GIF_RECORDING:
       return {
         ...state,
@@ -45,32 +44,20 @@ export default function creator(state = initialState, action) {
       return {
         ...state,
         recording: false,
+        preview: false,
         step: creatorSteps.ACCEPT_OR_REJECT,
       };
     case creatorTypes.SET_GIF_URL:
       return {
         ...state,
         gifUrl: action.payload.gifUrl,
-      };
-
-    case creatorTypes.ACCEPT_GIF:
-      return {
-        ...state,
-        step: creatorSteps.COMPLETE,
-      };
-
-    case creatorTypes.REJECT_GIF:
-      return {
-        ...state,
-        countdown: 3,
-        step: creatorSteps.COUNTDOWN,
+        blob: action.payload.blob,
       };
 
     case creatorTypes.RESET_CREATOR:
       return {
-        initialState,
+        ...initialState,
       };
-
     case creatorTypes.GIF_CREATE_REQUEST:
       return {
         ...state,
@@ -80,6 +67,7 @@ export default function creator(state = initialState, action) {
       return {
         ...state,
         loading: false,
+        step: creatorSteps.COMPLETE,
       };
     case creatorTypes.API_ERROR:
       return {

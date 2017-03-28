@@ -9,5 +9,6 @@
     "window": false,
     "XMLHttpRequest": false,
     "document": false,
+    "URL": false,
   }
 }

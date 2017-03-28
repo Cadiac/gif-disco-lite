@@ -3,17 +3,21 @@
   background-color: rgba(0, 0, 0, 0);
 }
 
-.Disco-hidden {
+.Recorder-hidden {
   display: none;
 }
 
-.Disco {
+.Recorder-visible {
+  display: inline;
+}
+
+.Recorder {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.Disco-canvas {
+.Recorder-canvas {
   position: fixed;
   top: 50%;
   left: 50%;

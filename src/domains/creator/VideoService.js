@@ -71,7 +71,7 @@ export default class VideoService {
 
     console.log('Started gif generation.');
     this.interval = setInterval(() => {
-      this.gif.addFrame(this.canvas, { delay: 100 });
+      this.gif.addFrame(this.canvas, { delay: 100, copy: true });
     }, 100);
   }
 

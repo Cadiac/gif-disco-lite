@@ -19,17 +19,19 @@ class RecorderContainer extends Component {
   }
 
   render() {
+    const { preview } = this.props;
     return (
-      <div className="Disco">
-        <div className="Disco-canvas">
+      <div className="Recorder">
+        <div className="Recorder-canvas">
           <canvas
             id="canvas"
             width="480"
             height="480"
+            className={preview ? 'Recorder-visible' : 'Recorder-hidden'}
             ref={(canvas) => { this.canvas = canvas; }}
           />
         </div>
-        <div className="Disco-hidden">
+        <div className="Recorder-hidden">
           <Webcam onReady={this.handleWebcamReady} />
         </div>
       </div>
@@ -38,6 +40,7 @@ class RecorderContainer extends Component {
 }
 
 RecorderContainer.propTypes = {
+  preview: PropTypes.bool.isRequired,
   actions: PropTypes.shape({
     initializeCreator: PropTypes.func.isRequired,
   }).isRequired,
@@ -45,7 +48,7 @@ RecorderContainer.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    creator: state.creator,
+    preview: state.creator.preview,
   };
 }
 
