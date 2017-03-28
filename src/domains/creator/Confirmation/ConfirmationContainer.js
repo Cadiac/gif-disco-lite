@@ -11,12 +11,12 @@ const Spinner = () => (
     <span className="icon is-large">
       <i className="fa fa-cog fa-spin" />
     </span>
-    <h1 className="title is-1">Processing..</h1>
+    <p className="subtitle is-3">Processing..</p>
   </div>
 );
 
 const ConfirmationContainer = (props) => {
-  const { gifUrl, actions } = props;
+  const { gifUrl, loading, actions } = props;
 
   if (!gifUrl) {
     return <Spinner />;
@@ -26,18 +26,27 @@ const ConfirmationContainer = (props) => {
     <div className="preview">
       <img src={gifUrl} alt="Awesome moves!" />
       <div className="spacer">
-        <div className="field is-grouped is-centered">
-          <p className="control">
-            <button className="button is-warning is-large" onClick={actions.uploadGif}>
-              Accept
-            </button>
-          </p>
-          <p className="control">
-            <button className="button is-info is-large" onClick={actions.startCreator}>
-              Try again
-            </button>
-          </p>
-        </div>
+        {loading ?
+          <button className="button is-info is-large is-loading" /> :
+          <div className="field is-grouped is-centered">
+            <p className="control">
+              <button
+                className="button is-warning is-large"
+                onClick={actions.uploadGif}
+              >
+                Accept
+              </button>
+            </p>
+            <p className="control">
+              <button
+                className="button is-info is-large"
+                onClick={actions.startCreator}
+              >
+                Try again
+              </button>
+            </p>
+          </div>
+        }
       </div>
     </div>
   );
@@ -45,6 +54,7 @@ const ConfirmationContainer = (props) => {
 
 ConfirmationContainer.propTypes = {
   gifUrl: PropTypes.string,
+  loading: PropTypes.bool.isRequired,
   actions: PropTypes.shape({
     startCreator: PropTypes.func.isRequired,
     uploadGif: PropTypes.func.isRequired,
@@ -58,6 +68,7 @@ ConfirmationContainer.defaultProps = {
 function mapStateToProps(state) {
   return {
     gifUrl: state.creator.gifUrl,
+    loading: state.creator.loading,
   };
 }
 
