@@ -7,6 +7,7 @@ module.exports = {
   outputfile: './public/wasm.js',
   exported_functions: [
     '_myFunc',
+    '_grayScale',
   ],
   flags: [
     '-s WASM=1',

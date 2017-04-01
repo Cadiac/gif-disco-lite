@@ -20,15 +20,24 @@ const loadWASM = () => {
         const wasmLoaded = () => {
           console.log('Emscripten boilerplate loaded.');
 
-          const wam = {};
+          const wasm = {};
 
-          // filters
-          wam['myFunc'] = function () {
+          wasm['myFunc'] = function () {
             _myFunc();
             return;
           };
 
-          resolve(wam);
+          wasm['grayScale'] = function (pixelData) {
+            const len = pixelData.length
+            const mem = _malloc(len);
+            HEAPU8.set(pixelData, mem);
+            _grayScale(mem, len);
+            const filtered = HEAPU8.subarray(mem, mem + len);
+            _free(mem);
+            return filtered;
+          };
+
+          resolve(wasm);
         }
 
         // GLOBAL -- create custom event for complete glue script execution

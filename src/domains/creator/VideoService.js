@@ -15,7 +15,6 @@ export default class VideoService {
     // eslint-disable-next-line
     loadWASM().then((wasm) => {
       this.wasm = wasm;
-      this.wasm.myFunc();
     }).catch((err) => {
       console.log('Error in fetching module: ', err);
     });
@@ -94,17 +93,16 @@ export default class VideoService {
     // console.log('check', vid, context);
     this.pixels = this.context.getImageData(0, 0, this.video.videoWidth, this.video.videoHeight);
 
-    // const t0 = performance.now();
+    const t0 = performance.now();
 
-    // TODO: Do image processing with wasm here
-    // setPixels(filter, 'wasm');
+    this.pixels.data.set(this.wasm.grayScale(this.pixels.data));
 
-    // const t1 = performance.now();
+    const t1 = performance.now();
 
     this.context.putImageData(this.pixels, 0, 0);
     requestAnimationFrame(this.drawFrameOnCanvas);
 
-    // console.log(`Frame took ${t1 - t0} ms`);
+    console.log(`Frame took ${t1 - t0} ms`);
   }
 
 
