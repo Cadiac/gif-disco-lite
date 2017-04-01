@@ -13,9 +13,9 @@ export default class VideoService {
     this.drawFrameOnCanvas = this.drawFrameOnCanvas.bind(this);
 
     // eslint-disable-next-line
-    loadWASM().then((module) => {
-      this.wasm = module;
-      this.wasm._myFunc();
+    loadWASM().then((wasm) => {
+      this.wasm = wasm;
+      this.wasm.myFunc();
     }).catch((err) => {
       console.log('Error in fetching module: ', err);
     });

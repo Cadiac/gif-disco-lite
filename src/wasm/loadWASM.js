@@ -1,7 +1,8 @@
 /* eslint-disable */
 
+var Module = {};
+
 const loadWASM = () => {
-  const Module = {};
   return new Promise((resolve, reject) => {
     if (!('WebAssembly' in window)) {
       console.log('Could not load WASM');
@@ -18,7 +19,16 @@ const loadWASM = () => {
 
         const wasmLoaded = () => {
           console.log('Emscripten boilerplate loaded.');
-          resolve(Module);
+
+          const wam = {};
+
+          // filters
+          wam['myFunc'] = function () {
+            _myFunc();
+            return;
+          };
+
+          resolve(wam);
         }
 
         // GLOBAL -- create custom event for complete glue script execution

@@ -12,7 +12,5 @@ module.exports = {
     '-s WASM=1',
     '-s ASSERTIONS=1',
     '-O3',
-    '-s BINARYEN_IMPRECISE=1',
-    '-s ALLOW_MEMORY_GROWTH=1',
   ],
 };
