@@ -1,27 +1,31 @@
 import GIF from 'gif.js';
 
 import Seriously from 'seriously';
-import 'seriously/effects/seriously.vignette';
+// import 'seriously/effects/seriously.vignette';
 import 'seriously/effects/seriously.split';
 import 'seriously/effects/seriously.chroma';
+import 'seriously/effects/seriously.pixelate';
 
 export default class VideoService {
   constructor() {
     this.composition = new Seriously();
 
     // Define effects
-    this.vignette = this.composition.effect('vignette');
-    this.vignette.amount = 1;
+    // this.vignette = this.composition.effect('vignette');
+    // this.vignette.amount = 1;
 
     this.split = this.composition.effect('split');
-    this.split.split = 0;
+    this.split.split = 0.0;
 
     this.chroma = this.composition.effect('chroma');
     this.chroma.weight = 1.32;
     this.chroma.balance = 0;
     this.chroma.screen = '#4def29';
-    this.chroma.clipWhite = 0.85;
-    this.chroma.clipBlack = 0.5125;
+    // this.chroma.clipWhite = 0.85;
+    // this.chroma.clipBlack = 0.5125;
+
+    this.pixelate = this.composition.effect('pixelate');
+    this.pixelate.pixelSize = [8, 8];
 
     // Resize video
     this.reformat = this.composition.transform('reformat');
@@ -50,9 +54,9 @@ export default class VideoService {
     this.reformat.source = this.video;
 
     this.chroma.source = this.reformat;
-    this.vignette.source = this.chroma;
+    // this.pixelate.source = this.chroma;
 
-    this.split.sourceA = this.vignette;
+    this.split.sourceA = this.chroma;
     this.split.sourceB = this.reformat;
 
     this.target.source = this.split;
