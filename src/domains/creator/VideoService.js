@@ -10,14 +10,14 @@ import loadWASM from '../../wasm/loadWASM';
 
 export default class VideoService {
   constructor() {
-    this.drawFrameOnCanvas = this.drawFrameOnCanvas.bind(this);
-
     // eslint-disable-next-line
     loadWASM().then((wasm) => {
       this.wasm = wasm;
     }).catch((err) => {
       console.log('Error in fetching module: ', err);
     });
+
+    this.drawFrameOnCanvas = this.drawFrameOnCanvas.bind(this);
 
     /* this.composition = new Seriously();
 
@@ -69,7 +69,7 @@ export default class VideoService {
       this.canvas.setAttribute('width', this.video.videoWidth);
       // cw = canvas.clientWidth; //usually same as canvas.height
       // ch = canvas.clientHeight;
-      this.drawFrameOnCanvas();
+      setTimeout(() => this.drawFrameOnCanvas(), 3000);
     });
 
     /* // Connect composition sources
@@ -93,16 +93,16 @@ export default class VideoService {
     // console.log('check', vid, context);
     this.pixels = this.context.getImageData(0, 0, this.video.videoWidth, this.video.videoHeight);
 
-    const t0 = performance.now();
+    // const t0 = performance.now();
 
-    this.pixels.data.set(this.wasm.grayScale(this.pixels.data));
+    this.pixels.data.set(this.wasm.removeGreen(this.pixels.data));
 
-    const t1 = performance.now();
+    // const t1 = performance.now();
 
     this.context.putImageData(this.pixels, 0, 0);
     requestAnimationFrame(this.drawFrameOnCanvas);
 
-    console.log(`Frame took ${t1 - t0} ms`);
+    // console.log(`Frame took ${t1 - t0} ms`);
   }
 
 

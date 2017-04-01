@@ -22,16 +22,16 @@ const loadWASM = () => {
 
           const wasm = {};
 
-          wasm['myFunc'] = function () {
+          wasm.myFunc = function () {
             _myFunc();
             return;
           };
 
-          wasm['grayScale'] = function (pixelData) {
+          wasm.removeGreen = function (pixelData) {
             const len = pixelData.length
             const mem = _malloc(len);
             HEAPU8.set(pixelData, mem);
-            _grayScale(mem, len);
+            _removeGreen(mem, len);
             const filtered = HEAPU8.subarray(mem, mem + len);
             _free(mem);
             return filtered;
