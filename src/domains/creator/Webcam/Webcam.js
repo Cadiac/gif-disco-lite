@@ -29,14 +29,22 @@ class Webcam extends Component {
         src: (window.URL || window.webkitURL) ?
           (window.URL || window.webkitURL).createObjectURL(stream) :
           stream,
-      }, this.props.onReady);
+      }, () => this.props.onReady(this.video));
     });
   }
 
   render() {
     const { src } = this.state;
     return (
-      <video id="webcam" autoPlay muted src={src} width="480" height="480" />
+      <video
+        id="webcam"
+        autoPlay
+        muted
+        src={src}
+        width="480"
+        height="480"
+        ref={(video) => { this.video = video; }}
+      />
     );
   }
 }

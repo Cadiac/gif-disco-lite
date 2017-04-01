@@ -14,8 +14,8 @@ class RecorderContainer extends Component {
     this.handleWebcamReady = this.handleWebcamReady.bind(this);
   }
 
-  handleWebcamReady() {
-    this.props.actions.initializeCreator(this.canvas, '#webcam');
+  handleWebcamReady(video) {
+    this.props.actions.initializeCreator(this.canvas, video);
   }
 
   render() {

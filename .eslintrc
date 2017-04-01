@@ -2,7 +2,8 @@
   "extends": "airbnb",
   "rules": {
     "no-console": 0,
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "no-underscore-dangle": ["error", { "allow": ["_myFunc"] }]
   },
   "globals": {
     "fetch": false,
@@ -10,5 +11,7 @@
     "XMLHttpRequest": false,
     "document": false,
     "URL": false,
+    "requestAnimationFrame": false,
+    "performance": false,
   }
 }

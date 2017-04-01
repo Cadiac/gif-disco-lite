@@ -1,14 +1,26 @@
-import GIF from 'gif.js';
+// import GIF from 'gif.js';
 
-import Seriously from 'seriously';
+/* import Seriously from 'seriously';
 // import 'seriously/effects/seriously.vignette';
 import 'seriously/effects/seriously.split';
 import 'seriously/effects/seriously.chroma';
-import 'seriously/effects/seriously.pixelate';
+import 'seriously/effects/seriously.pixelate';*/
+
+import loadWASM from '../../wasm/loadWASM';
 
 export default class VideoService {
   constructor() {
-    this.composition = new Seriously();
+    this.drawFrameOnCanvas = this.drawFrameOnCanvas.bind(this);
+
+    // eslint-disable-next-line
+    loadWASM().then((module) => {
+      this.wasm = module;
+      this.wasm._myFunc();
+    }).catch((err) => {
+      console.log('Error in fetching module: ', err);
+    });
+
+    /* this.composition = new Seriously();
 
     // Define effects
     // this.vignette = this.composition.effect('vignette');
@@ -32,25 +44,36 @@ export default class VideoService {
     this.reformat.mode = 'cover';
     this.reformat.width = 480;
     this.reformat.height = 480;
+    */
   }
 
   setActiveCanvas(canvas) {
     // Composition target
-    this.target = this.composition.target(canvas);
+    // this.target = this.composition.target(canvas);
     this.canvas = canvas;
+    this.context = this.canvas.getContext('2d');
   }
 
   setActiveWebcam(webcam) {
     // Grab video from webcam
-    this.video = this.composition.source(webcam);
+    this.video = webcam;
+    // this.video = this.composition.source(webcam);
   }
 
   startWebcam() {
-    if (!this.target || !this.video) {
+    if (!this.canvas || !this.video) {
       throw new Error('Target canvas or video source is missing!');
     }
 
-    // Connect composition sources
+    this.video.addEventListener('loadeddata', () => {
+      this.canvas.setAttribute('height', this.video.videoHeight);
+      this.canvas.setAttribute('width', this.video.videoWidth);
+      // cw = canvas.clientWidth; //usually same as canvas.height
+      // ch = canvas.clientHeight;
+      this.drawFrameOnCanvas();
+    });
+
+    /* // Connect composition sources
     this.reformat.source = this.video;
 
     this.chroma.source = this.reformat;
@@ -63,31 +86,57 @@ export default class VideoService {
 
     console.log('Starting video composition!');
     // Start the composition
-    this.composition.go();
+    this.composition.go();*/
   }
 
+  drawFrameOnCanvas() {
+    this.context.drawImage(this.video, 0, 0);
+    // console.log('check', vid, context);
+    this.pixels = this.context.getImageData(0, 0, this.video.videoWidth, this.video.videoHeight);
+
+    // const t0 = performance.now();
+
+    // TODO: Do image processing with wasm here
+    // setPixels(filter, 'wasm');
+
+    // const t1 = performance.now();
+
+    this.context.putImageData(this.pixels, 0, 0);
+    requestAnimationFrame(this.drawFrameOnCanvas);
+
+    // console.log(`Frame took ${t1 - t0} ms`);
+  }
+
+
   startRecording() {
-    this.gif = new GIF({
+    console.log('Started gif generation.');
+    console.log(this.canvas);
+    console.log(this.video);
+
+    /* this.gif = new GIF({
       workers: 2,
       quality: 10,
       transparent: 'rgba(0, 0, 0, 0)',
     });
 
-    console.log('Started gif generation.');
     this.interval = setInterval(() => {
       this.gif.addFrame(this.canvas, { delay: 100, copy: true });
-    }, 100);
+    }, 100);*/
   }
 
-  stopRecording(onCreate) {
-    clearInterval(this.interval);
+  stopRecording() {
+    // clearInterval(this.interval);
 
-    this.gif.on('finished', (blob) => {
+    console.log('Gif generation finished!');
+    console.log(this.canvas);
+    console.log(this.video);
+
+    /* this.gif.on('finished', (blob) => {
       console.log('Gif generation finished!');
       onCreate(blob);
     });
 
-    this.gif.render();
+    this.gif.render();*/
   }
 
   changeSettings(settings) {
