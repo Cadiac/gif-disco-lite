@@ -1,5 +1,3 @@
-// lib.cpp
-#include <iostream>
 #include <vector>
 #include <math.h>
 
@@ -41,10 +39,6 @@ std::vector<double> rgbToHsv(double r, double g, double b) {
 }
 
 extern "C" {
-  void myFunc() {
-    std::cout << "Hello WASM!" << std::endl;
-  }
-
   void removeGreen (unsigned char* data, int len) {
     for (int i = 0; i < len; i += 4) {
       double r = ((double) data[i]) / 255.0;

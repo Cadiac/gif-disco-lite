@@ -6,7 +6,6 @@ module.exports = {
   ],
   outputfile: './public/wasm.js',
   exported_functions: [
-    '_myFunc',
     '_removeGreen',
   ],
   flags: [

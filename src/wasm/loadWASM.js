@@ -22,11 +22,6 @@ const loadWASM = () => {
 
           const wasm = {};
 
-          wasm.myFunc = function () {
-            _myFunc();
-            return;
-          };
-
           wasm.removeGreen = function (pixelData) {
             const len = pixelData.length
             const mem = _malloc(len);
