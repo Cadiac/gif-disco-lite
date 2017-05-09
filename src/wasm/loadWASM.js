@@ -40,11 +40,6 @@ const loadWASM = () => {
         window.script.addEventListener('done', wasmLoaded);
         // END GLOBAL
 
-        // TODO: IN EMSCRIPTEN GLUE INSERT
-        // else{doRun()} ...
-        // script.dispatchEvent(doneEvent);
-        // ... }Module["run"]
-
         window.script.src = '/wasm.js';
         document.body.appendChild(window.script);
       });
