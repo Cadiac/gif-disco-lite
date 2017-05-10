@@ -3,7 +3,8 @@
   "rules": {
     "no-console": 0,
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "no-underscore-dangle": ["error", { "allow": ["_myFunc"] }]
+    "no-underscore-dangle": ["error", { "allow": ["_myFunc"] }],
+    "no-plusplus": 0,
   },
   "globals": {
     "fetch": false,

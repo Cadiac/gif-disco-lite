@@ -34,7 +34,7 @@ export default class VideoService {
     this.video.addEventListener('loadeddata', () => {
       this.canvas.setAttribute('height', this.video.videoHeight);
       this.canvas.setAttribute('width', this.video.videoWidth);
-      setTimeout(() => this.drawFrameOnCanvas(), 1000);
+      setTimeout(() => this.drawFrameOnCanvas(), 5000);
     });
   }
 
@@ -76,9 +76,13 @@ export default class VideoService {
       transparent: 'rgba(0, 0, 0, 0)',
     });
 
-    this.frames.forEach((frame) => {
-      gif.addFrame(frame, { delay: 50 });
-    });
+    // Loop through frames back and forth
+    for (let i = 0; i < this.frames.length; ++i) {
+      gif.addFrame(this.frames[i], { delay: 50 });
+    }
+    for (let i = this.frames.length - 1; i >= 0; --i) {
+      gif.addFrame(this.frames[i], { delay: 50 });
+    }
 
     gif.on('finished', (blob) => {
       const t1 = performance.now();
