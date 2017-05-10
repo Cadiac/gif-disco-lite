@@ -41,7 +41,7 @@ class Webcam extends Component {
         autoPlay
         muted
         loop
-        src={'/videos/dance.webm'}
+        src={'/sample/dance.webm'}
         width="480"
         height="480"
         ref={(video) => { this.video = video; }}

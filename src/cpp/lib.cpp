@@ -1,3 +1,6 @@
+/* Modified from Kimmo Brunfeldt's for original Gif Disco chroma keying
+ * https://github.com/kimmobrunfeldt/howto-everything/blob/master/remove-green.md */
+
 #include <vector>
 #include <math.h>
 
