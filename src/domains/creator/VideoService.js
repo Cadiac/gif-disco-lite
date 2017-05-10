@@ -1,4 +1,5 @@
-import GIF from 'gif.js';
+import GifEncoder from 'gif-encoder';
+import blobStream from 'blob-stream';
 
 import loadWASM from '../../wasm/loadWASM';
 
@@ -9,6 +10,9 @@ export default class VideoService {
     }).catch((err) => {
       console.log('Error in fetching module: ', err);
     });
+
+    this.recording = false;
+    this.frames = [];
 
     this.drawFrameOnCanvas = this.drawFrameOnCanvas.bind(this);
   }
@@ -45,6 +49,11 @@ export default class VideoService {
     // const t1 = performance.now();
 
     this.context.putImageData(this.pixels, 0, 0);
+
+    if (this.recording) {
+      this.frames.push(this.pixels.data);
+    }
+
     requestAnimationFrame(this.drawFrameOnCanvas);
 
     // console.log(`Frame took ${t1 - t0} ms`);
@@ -53,34 +62,41 @@ export default class VideoService {
 
   startRecording() {
     console.log('Started gif generation.');
-
-    this.gif = new GIF({
-      workers: 2,
-      quality: 10,
-      transparent: 'rgba(0, 0, 0, 0)',
-    });
-
-    this.interval = setInterval(() => {
-      this.gif.addFrame(this.canvas, { delay: 100, copy: true });
-    }, 100);
+    this.recording = true;
   }
 
-  stopRecording(onCreate) {
-    clearInterval(this.interval);
-
+  stopRecording() {
     console.log('Gif generation finished!');
+    console.log('Got', this.frames.length, 'frames');
 
-    this.gif.on('finished', (blob) => {
-      console.log('Gif generation finished!');
-      onCreate(blob);
+    const output = blobStream();
+
+    const gif = new GifEncoder(this.video.videoWidth, this.video.videoHeight, {
+      highWaterMark: 5 * 1024 * 1024, // 5MB
     });
 
-    this.gif.render();
+    gif.on('data', (data) => {
+      // eslint-disable-next-line
+      output._write(data, null, () => {})
+    });
+    // Repeat forever
+    gif.setRepeat(0);
+
+    gif.on('end', () => {
+      console.log(output.toBlobURL());
+    });
+
+    gif.writeHeader();
+
+    this.frames.forEach((frame) => {
+      gif.addFrame(frame);
+    });
+
+    gif.finish();
   }
 
+  // eslint-disable-next-line
   changeSettings(settings) {
-    this.vignette.amount = settings.vignette;
-    this.split.split = settings.split;
-    this.chroma.screen = settings.chroma;
+    // Not supported in WASM version (yet)
   }
 }
