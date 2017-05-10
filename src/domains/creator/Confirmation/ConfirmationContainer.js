@@ -23,8 +23,12 @@ const ConfirmationContainer = (props) => {
   }
 
   return (
-    <div className="preview">
-      <img src={gifUrl} alt="Awesome moves!" />
+    <div>
+      <img
+        className="preview"
+        src={gifUrl}
+        alt="Awesome moves!"
+      />
       <div className="spacer">
         {loading ?
           <button className="button is-info is-large is-loading" /> :

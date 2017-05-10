@@ -1,9 +1,7 @@
 // wasm.config.js
 module.exports = {
-  emscripten_path: './../emsdk',
-  inputfiles: [
-    './src/cpp/lib.cpp',
-  ],
+  emscripten_path: process.env.EMSCRIPTEN_PATH,
+  inputfile: './src/cpp/lib.cpp',
   outputfile: './public/wasm.js',
   exported_functions: [
     '_removeGreen',
