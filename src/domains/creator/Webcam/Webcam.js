@@ -34,14 +34,14 @@ class Webcam extends Component {
   }
 
   render() {
-    const { src } = this.state;
+    // const { src } = this.state;
     return (
       <video
         id="webcam"
         autoPlay
         muted
         loop
-        src={src}
+        src={'/videos/dance.webm'}
         width="480"
         height="480"
         ref={(video) => { this.video = video; }}

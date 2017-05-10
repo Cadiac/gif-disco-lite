@@ -1,5 +1,4 @@
-import GifEncoder from 'gif-encoder';
-import blobStream from 'blob-stream';
+import GIF from 'gif.js';
 
 import loadWASM from '../../wasm/loadWASM';
 
@@ -35,7 +34,7 @@ export default class VideoService {
     this.video.addEventListener('loadeddata', () => {
       this.canvas.setAttribute('height', this.video.videoHeight);
       this.canvas.setAttribute('width', this.video.videoWidth);
-      setTimeout(() => this.drawFrameOnCanvas(), 3000);
+      setTimeout(() => this.drawFrameOnCanvas(), 1000);
     });
   }
 
@@ -51,7 +50,7 @@ export default class VideoService {
     this.context.putImageData(this.pixels, 0, 0);
 
     if (this.recording) {
-      this.frames.push(this.pixels.data);
+      this.frames.push(this.pixels);
     }
 
     requestAnimationFrame(this.drawFrameOnCanvas);
@@ -66,33 +65,31 @@ export default class VideoService {
   }
 
   stopRecording(onCreate) {
-    console.log('Gif generation finished!');
+    console.log('Gif recording stopped!');
     console.log('Got', this.frames.length, 'frames');
 
-    const output = blobStream();
+    const t0 = performance.now();
 
-    const gif = new GifEncoder(this.video.videoWidth, this.video.videoHeight, {
-      highWaterMark: 5 * 1024 * 1024, // 5MB
+    const gif = new GIF({
+      workers: 4,
+      quality: 30,
+      transparent: 'rgba(0, 0, 0, 0)',
     });
-
-    gif.on('data', (data) => {
-      // eslint-disable-next-line
-      output._write(data, null, () => {})
-    });
-    // Repeat forever
-    gif.setRepeat(0);
-
-    gif.on('end', () => {
-      onCreate(output.toBlob());
-    });
-
-    gif.writeHeader();
 
     this.frames.forEach((frame) => {
-      gif.addFrame(frame);
+      gif.addFrame(frame, { delay: 50 });
     });
 
-    gif.finish();
+    gif.on('finished', (blob) => {
+      const t1 = performance.now();
+      console.log('Gif generation finished!');
+      console.log(`Gif generation took ${t1 - t0} ms`);
+      onCreate(blob);
+
+      this.frames = [];
+    });
+
+    gif.render();
   }
 
   // eslint-disable-next-line
