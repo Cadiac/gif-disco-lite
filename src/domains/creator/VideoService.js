@@ -65,7 +65,7 @@ export default class VideoService {
     this.recording = true;
   }
 
-  stopRecording() {
+  stopRecording(onCreate) {
     console.log('Gif generation finished!');
     console.log('Got', this.frames.length, 'frames');
 
@@ -83,7 +83,7 @@ export default class VideoService {
     gif.setRepeat(0);
 
     gif.on('end', () => {
-      console.log(output.toBlobURL());
+      onCreate(output.toBlob());
     });
 
     gif.writeHeader();

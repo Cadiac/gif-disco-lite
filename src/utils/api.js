@@ -12,7 +12,7 @@ export const createGif = blob => api.post('/gifs')
   .then((response) => {
     const options = {
       headers: {
-        'Content-Type': blob.type,
+        'Content-Type': 'image/gif',
       },
     };
     return BPromise.props({
