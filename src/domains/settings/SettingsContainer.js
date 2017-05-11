@@ -13,6 +13,7 @@ const SettingsContainer = (props) => {
       onSetVignette={actions.setVignette}
       onSetSplit={actions.setSplit}
       onSetChroma={actions.setChroma}
+      onToggleWebcam={actions.toggleWebcam}
     />
   );
 };
@@ -22,12 +23,14 @@ SettingsContainer.propTypes = {
     vignette: PropTypes.number.isRequired,
     split: PropTypes.number.isRequired,
     chroma: PropTypes.string.isRequired,
+    webcam: PropTypes.string.isRequired,
   }).isRequired,
 
   actions: PropTypes.shape({
     setVignette: PropTypes.func.isRequired,
     setSplit: PropTypes.func.isRequired,
-    chroma: PropTypes.func.isRequired,
+    setChroma: PropTypes.func.isRequired,
+    toggleWebcam: PropTypes.func.isRequired,
   }).isRequired,
 };
 

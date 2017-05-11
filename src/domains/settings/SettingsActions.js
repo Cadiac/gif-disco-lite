@@ -14,3 +14,7 @@ export const setChroma = chroma => ({
   payload: { chroma },
   type: settingTypes.SET_CHROMA_COLOR,
 });
+
+export const toggleWebcam = () => ({
+  type: settingTypes.TOGGLE_WEBCAM,
+});
