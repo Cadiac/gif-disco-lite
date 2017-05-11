@@ -6,6 +6,8 @@ What do John Travolta, Mick Jagger, Uuno Turhapuro and you have in common? Y'all
 
 Gif Discoᴸᴵᵀᴱ is lightweight rewrite of the original [GIF Disco](https://github.com/futurice/gif-disco) that runs in Heroku, and does most of the image processing on the browser.
 
+**This project is still WIP, and only implements gif recording.**
+
 ## Table of Contents
 
 - [Introduction](#introduction)
