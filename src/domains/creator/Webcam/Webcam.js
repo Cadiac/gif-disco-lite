@@ -34,15 +34,25 @@ class Webcam extends Component {
   }
 
   render() {
-    // const { src } = this.state;
+    const src = this.props.webcam ? this.state.src : '/sample/dance.webm';
     return (
-      <video id="webcam" autoPlay muted loop src={'/sample/dance.webm'} width="480" height="480" />
+      <video
+        id="webcam"
+        autoPlay
+        muted
+        loop
+        src={src}
+        width="480"
+        height="480"
+        ref={(video) => { this.video = video; }}
+      />
     );
   }
 }
 
 Webcam.propTypes = {
   onReady: React.PropTypes.func.isRequired,
+  webcam: React.PropTypes.bool.isRequired,
 };
 
 export default Webcam;

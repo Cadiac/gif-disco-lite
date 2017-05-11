@@ -4,6 +4,7 @@ const initialState = {
   vignette: 1,
   split: 0,
   chroma: '#4def29',
+  webcam: false,
 };
 
 export default function settings(state = initialState, action) {
@@ -22,6 +23,11 @@ export default function settings(state = initialState, action) {
       return {
         ...state,
         chroma: action.payload.chroma,
+      };
+    case settingTypes.TOGGLE_WEBCAM:
+      return {
+        ...state,
+        webcam: !state.webcam,
       };
     default:
       return state;
