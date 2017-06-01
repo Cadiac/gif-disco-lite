@@ -5323,9 +5323,9 @@ send@0.15.1:
     range-parser "~1.2.0"
     statuses "~1.3.1"
 
-"seriously@git+https://github.com/namniak/Seriously.js.git#fdd7bcd236bd66fb138e3e5c330c7bcba4822858":
-  version "1.1.0"
-  resolved "git+https://github.com/namniak/Seriously.js.git#fdd7bcd236bd66fb138e3e5c330c7bcba4822858"
+"seriously@git+https://github.com/Cadiac/Seriously.js.git#89afd201bcecc787935f81eb52f5d720f5b6b623":
+  version "1.0.0"
+  resolved "git+https://github.com/Cadiac/Seriously.js.git#89afd201bcecc787935f81eb52f5d720f5b6b623"
 
 serve-index@^1.7.2:
   version "1.8.0"
