@@ -4,6 +4,7 @@ import Seriously from 'seriously';
 import 'seriously/effects/seriously.vignette';
 import 'seriously/effects/seriously.split';
 import 'seriously/effects/seriously.chroma';
+import 'seriously/sources/seriously.camera';
 
 export default class VideoService {
   constructor() {
@@ -30,18 +31,17 @@ export default class VideoService {
     this.reformat.height = 480;
   }
 
-  setActiveCanvas(canvas) {
+  setCompositionTargets(canvas) {
     // Composition target
     this.target = this.composition.target(canvas);
+    // TODO: Get rid of this
     this.canvas = canvas;
   }
 
-  setActiveWebcam(webcam) {
-    // Grab video from webcam
-    this.video = this.composition.source(webcam);
-  }
-
   startWebcam() {
+    // TODO: where to place this
+    this.video = this.composition.source('camera');
+
     if (!this.target || !this.video) {
       throw new Error('Target canvas or video source is missing!');
     }

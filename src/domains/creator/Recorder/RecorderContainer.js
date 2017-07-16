@@ -4,22 +4,15 @@ import { connect } from 'react-redux';
 
 import './Recorder.css';
 
-import Webcam from '../Webcam/Webcam';
 import CreatorActions from '../CreatorActions';
 
 class RecorderContainer extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleWebcamReady = this.handleWebcamReady.bind(this);
-  }
-
-  handleWebcamReady() {
-    this.props.actions.initializeCreator(this.canvas, '#webcam');
+  componentDidMount() {
+    this.props.actions.initializeCreator(this.canvas);
   }
 
   render() {
-    const { preview, webcam } = this.props;
+    const { preview } = this.props;
     return (
       <div className="Recorder">
         <div className="Recorder-canvas">
@@ -31,9 +24,6 @@ class RecorderContainer extends Component {
             ref={(canvas) => { this.canvas = canvas; }}
           />
         </div>
-        <div className="Recorder-hidden">
-          <Webcam onReady={this.handleWebcamReady} webcam={webcam} />
-        </div>
       </div>
     );
   }
@@ -41,7 +31,6 @@ class RecorderContainer extends Component {
 
 RecorderContainer.propTypes = {
   preview: PropTypes.bool.isRequired,
-  webcam: PropTypes.bool.isRequired,
   actions: PropTypes.shape({
     initializeCreator: PropTypes.func.isRequired,
   }).isRequired,
@@ -50,7 +39,6 @@ RecorderContainer.propTypes = {
 function mapStateToProps(state) {
   return {
     preview: state.creator.preview,
-    webcam: state.settings.webcam,
   };
 }
 

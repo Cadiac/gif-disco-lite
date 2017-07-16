@@ -2,9 +2,9 @@ import BPromise from 'bluebird';
 import * as api from '../../utils/api';
 import { creatorTypes } from './CreatorConstants';
 
-export const initializeCreator = (canvas, webcam) => ({
+export const initializeCreator = canvas => ({
   type: creatorTypes.INITIALIZE_CREATOR,
-  payload: { canvas, webcam },
+  payload: { canvas },
 });
 
 export const startCreator = () => (

@@ -5,8 +5,7 @@ export default function videoMiddleware(videoService) {
   return ({ dispatch }) => next => (action) => {
     switch (action.type) {
       case creatorTypes.INITIALIZE_CREATOR:
-        videoService.setActiveCanvas(action.payload.canvas);
-        videoService.setActiveWebcam(action.payload.webcam);
+        videoService.setCompositionTargets(action.payload.canvas);
         dispatch({ type: creatorTypes.START_WEBCAM });
         break;
 
