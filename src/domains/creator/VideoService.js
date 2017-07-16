@@ -30,8 +30,6 @@ export default class VideoService {
     this.reformat.width = 480;
     this.reformat.height = 480;
 
-    this.recording = false;
-
     this.addCurrentFrame = this.addCurrentFrame.bind(this);
   }
 
@@ -74,8 +72,6 @@ export default class VideoService {
 
   startRecording() {
     console.log('Started gif generation.');
-
-    this.recording = true;
 
     this.gif = new GIF({
       workers: 2,
